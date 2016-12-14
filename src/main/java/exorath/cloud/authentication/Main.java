@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.mongodb.*;
 import com.mongodb.util.JSON;
 
-import java.rmi.UnknownHostException;
+import java.util.Arrays;
 
 /**
  * Created by Connor on 12/14/2016.
@@ -18,12 +18,12 @@ public class Main {
         try {
 
             //testing java object to mongo object
-            MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
-            DB db = mongoClient.getDB("auth");
-            Gson gson = new GsonBuilder().create();
+            MongoCredential credential = MongoCredential.createCredential(System.getenv("MONGO_HOST"), System.getenv("MONGO_USER "), System.getenv("MONGO_PWD").toCharArray());
+            MongoClient mongoClient = new MongoClient(new ServerAddress(), Arrays.asList(credential));
+            DB db = mongoClient.getDB(System.getenv("MONGO_DATABASE "));
             DBCollection collection = db.getCollection("users");
-            DBObject dbObject = (DBObject) JSON
-                    .parse(gson.toJson(new UserData()));
+            Gson gson = new GsonBuilder().create();
+            DBObject dbObject = (DBObject) JSON.parse(gson.toJson(new UserData()));
             collection.insert(dbObject);
 
         } catch (Exception e) {
