@@ -8,7 +8,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class Password {
 
     public static String generatePasswordHash(String plaintext) {
-        return BCrypt.hashpw(plaintext, BCrypt.gensalt(20));
+        return BCrypt.hashpw(plaintext, BCrypt.gensalt(12));
     }
 
     public static boolean checkPassowrd(String plaintext, String hash) {
