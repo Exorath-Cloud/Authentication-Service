@@ -22,7 +22,7 @@ public class DatabaseProvider {
     MongoDatabase db;
 
     DatabaseProvider (MongoCredential credential){
-        mongoClient = new MongoClient(new ServerAddress(), Arrays.asList(credential));
+        mongoClient = new MongoClient(new ServerAddress(System.getenv("MONGO_HOST")), Arrays.asList(credential));
         db = mongoClient.getDatabase(System.getenv("MONGO_DATABASE"));
     }
 
