@@ -15,6 +15,7 @@ public class Service {
         port(port);
         get("/auth/:username/:password", (request, response) -> {
 
+            System.out.println("--------------------------------------------");
             System.out.println("auth request from " + request.ip());
             String username = request.params(":username");
             String password = request.params(":password");
@@ -34,6 +35,7 @@ public class Service {
             }
 
             System.out.println(response.body());
+            System.out.println("--------------------------------------------");
             return response.body();
         });
 
@@ -47,6 +49,10 @@ public class Service {
         });
 
         get("/check/:username/:tokenid", (request, response) -> {
+
+            System.out.println("--------------------------------------------");
+            System.out.println("token check request from " + request.ip());
+
             String username = request.params(":username");
             String tokenid = request.params(":tokenid");
 
@@ -62,6 +68,7 @@ public class Service {
             }
 
             System.out.println(response.body());
+            System.out.println("--------------------------------------------");
             return response.body();
         });
 
