@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
@@ -28,16 +29,36 @@ public class DatabaseProvider {
 
     public UserData getUserData(String username) {
         Document document = db.getCollection("users").find(new Document("username",username)).first();
-        UserData userData = new GsonBuilder().create().fromJson(document.toJson(),UserData.class);
-        return userData;
+        if (document != null){
+            UserData userData = new GsonBuilder().create().fromJson(document.toJson(),UserData.class);
+            return userData;
+        }
+        return null;
     }
 
     public void addUserData(UserData userData) {
-        Document document = Document.parse(new GsonBuilder().create().toJson(userData));
-        db.getCollection("users").insertOne(document);
+        if(getUserData(userData.getUsername()) != null){
+            updateUser(userData.getUsername(),userData);
+        }else{
+            Document document = Document.parse(new GsonBuilder().create().toJson(userData));
+            db.getCollection("users").insertOne(document);
+        }
     }
 
-    public List<UserData> getAllUsers() {
-        return null;
+    public List<UserData> getAllUsers(){
+        ArrayList<UserData> userDatas = new ArrayList<>();
+        MongoCursor<Document> cursor = db.getCollection("users").find().iterator();
+        try {
+            while (cursor.hasNext()) {
+               userDatas.add(new GsonBuilder().create().fromJson(cursor.next().toJson(),UserData.class));
+            }
+        } finally {
+            cursor.close();
+        }
+        return userDatas;
+    }
+
+    public void updateUser(String username, UserData userData) {
+        db.getCollection("users").findOneAndReplace(new Document("username",username),Document.parse(new GsonBuilder().create().toJson(userData)));
     }
 }
