@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/authentication-1.0-SNAPSHOT.jar --port $PORT target/*.war
+web: java $JAVA_OPTS -jar target/${project.build.finalName} --port $PORT target/*.war
