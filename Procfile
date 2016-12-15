@@ -1,0 +1,1 @@
+web: java $JAVA_OPTS -jar target/dependency/Auth.jar --port $PORT target/*.war
