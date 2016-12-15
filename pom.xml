@@ -74,6 +74,8 @@
                     <execution><goals><goal>java</goal></goals></execution>
                 </executions>
                 <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <mainClass>exorath.cloud.authentication.Main</mainClass>
                 </configuration>
             </plugin>
