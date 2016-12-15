@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) {
 
         service = new Service();
-        databaseProvider = new DatabaseProvider(MongoCredential.createCredential(System.getenv("MONGO_HOST"), System.getenv("MONGO_USER"), System.getenv("MONGO_PWD").toCharArray()));
+        databaseProvider = new DatabaseProvider(MongoCredential.createCredential(System.getenv("MONGO_HOST"), System.getenv("MONGO_DATABASE"), System.getenv("MONGO_PWD").toCharArray()));
     }
 
 }
