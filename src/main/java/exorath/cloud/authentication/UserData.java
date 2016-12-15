@@ -16,5 +16,11 @@ public class UserData {
     private AccessToken accessToken; //session id for browsers, will regenerate after a certain timespan
     
     private Map<String, ResetToken> resetTokensById; //The password reset tokens by their id, they expire after a timespan and are single use.
-    
+
+    UserData(String username, String email, String passwordHash){
+        this.username = username;
+        this.email = email;
+        this.passwordHash = passwordHash;
+    }
+
 }
