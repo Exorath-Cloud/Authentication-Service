@@ -16,13 +16,20 @@ public class Service {
         get("/auth/:username/:password", (request, response) -> {
 
             String username = request.params(":username");
-            String pasword = request.params(":password");
+            String password = request.params(":password");
 
-            UserData userData = new UserData(username,"123@123.com",pasword);
+            UserData userData = new UserData(username,"123@123.com",password);
             Document document = Document.parse(new GsonBuilder().create().toJson(userData));
             UserData userData1 = new GsonBuilder().create().fromJson(document.toJson(),UserData.class);
 
-            response.body(String.valueOf(userData.equals(userData1)));
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(userData == userData1);
+            stringBuilder.append("\n");
+            stringBuilder.append(new GsonBuilder().create().toJson(userData));
+            stringBuilder.append("\n");
+            stringBuilder.append(new GsonBuilder().create().toJson(userData1));
+            stringBuilder.append("\n");
+
 
             return response.body();
 
