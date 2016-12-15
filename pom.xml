@@ -103,6 +103,7 @@
                             <mainClass>exorath.cloud.authentication.Main</mainClass>
                         </manifest>
                     </archive>
+                    <finalName>AuthService</finalName>
                 </configuration>
             </plugin>
 
