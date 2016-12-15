@@ -15,7 +15,7 @@ public class Service {
         port(Integer.parseInt(System.getenv("PORT")));
         get("/auth/:username/:password", (request, response) -> {
 
-            Main.databaseProvider.updateUserData(new UserData("test","email","pass"));
+            Main.databaseProvider.addUserData(new UserData("test","email","pass"));
 
             return Main.databaseProvider.getAllUsers().toString();
 

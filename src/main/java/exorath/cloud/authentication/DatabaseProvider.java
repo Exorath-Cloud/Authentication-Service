@@ -3,9 +3,7 @@ package exorath.cloud.authentication;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mongodb.*;
-import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.util.JSON;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -26,29 +24,21 @@ public class DatabaseProvider {
         db = mongoClient.getDatabase(System.getenv("MONGO_DATABASE"));
     }
 
-    public Document getDBObject(Object object){
+    public UserData getUserData(String username){
+        return null;
+    }
+
+    public void addUserData(UserData userData){
         Gson gson = new GsonBuilder().create();
-        return (Document) JSON.parse(gson.toJson(object));
+        db.getCollection("users").insertOne(Document.parse(gson.toJson(userData)));
     }
 
-    public Object toPOJO(Document dbObject, Class clazz){
-        Gson gson = new GsonBuilder().create();
-        return gson.fromJson(JSON.serialize(dbObject),clazz);
-    }
-
-    public void updateUserData(UserData userData){
-        MongoCollection<Document> collection =  db.getCollection("users");
-        collection.insertOne(getDBObject(userData));
-    }
-
-    public List<Document> getAllUsers(){
-        List<Document> documents = new ArrayList<>();
-        MongoCollection<Document> collection =  db.getCollection("users");
-        Iterator<Document> iterator = collection.find().iterator();
-        while(iterator.hasNext()){
+    public List<Document> getAllUsers() {
+        ArrayList<Document> documents = new ArrayList<>();
+        Iterator<Document> iterator = db.getCollection("users").find().iterator();
+        while (iterator.hasNext()){
             documents.add(iterator.next());
         }
         return documents;
     }
-
 }
