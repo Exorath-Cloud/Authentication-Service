@@ -12,7 +12,7 @@ import static spark.Spark.port;
 public class Service {
 
     Service() {
-        port(8000);
+        port(Integer.parseInt(System.getenv("PORT")));
         get("/auth/:username/:password", (request, response) -> {
 
             Main.databaseProvider.updateUserData(new UserData("test","email","pass"));
