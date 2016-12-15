@@ -66,17 +66,6 @@
 
     <build>
         <plugins>
-            <!-- download source code in Eclipse, best practice -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-eclipse-plugin</artifactId>
-                <version>2.9</version>
-                <configuration>
-                    <downloadSources>true</downloadSources>
-                    <downloadJavadocs>false</downloadJavadocs>
-                </configuration>
-            </plugin>
-
             <!-- Set a JDK compiler level -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -90,21 +79,28 @@
 
             <!-- Make this jar executable -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
+                <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <!-- DO NOT include log4j.properties file in your Jar -->
-                    <excludes>
-                        <exclude>**/log4j.properties</exclude>
-                    </excludes>
                     <archive>
                         <manifest>
-                            <!-- Jar file entry point -->
                             <mainClass>exorath.cloud.authentication.Main</mainClass>
                         </manifest>
                     </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
                     <finalName>AuthService</finalName>
+                    <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
