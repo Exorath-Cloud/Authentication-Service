@@ -16,9 +16,9 @@ public class Main {
     static DatabaseProvider databaseProvider;
 
     public static void main(String[] args) {
-        System.out.println("Started Authentication-Service");
+
         service = new Service();
-        databaseProvider = new DatabaseProvider(MongoCredential.createCredential(System.getenv("MONGO_HOST"), System.getenv("MONGO_USER "), System.getenv("MONGO_PWD").toCharArray()));
+        databaseProvider = new DatabaseProvider(MongoCredential.createCredential(System.getenv("MONGO_HOST"), System.getenv("MONGO_USER"), System.getenv("MONGO_PWD").toCharArray()));
     }
 
 }
