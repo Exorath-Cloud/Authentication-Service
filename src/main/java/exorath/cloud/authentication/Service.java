@@ -13,7 +13,7 @@ public class Service {
 
     Service() {
         port(Integer.parseInt(System.getenv("PORT")));
-        get("/auth/:username/:password", (request, response) -> {
+        get("/auth/:username/:password/", (request, response) -> {
 
             String username = request.params(":username");
             String password = request.params(":password");
