@@ -21,16 +21,20 @@ public class DatabaseProvider {
     MongoClient mongoClient;
     MongoDatabase db;
 
-    DatabaseProvider(MongoCredential credential) {
-        mongoClient = new MongoClient(new ServerAddress(System.getenv("MONGO_HOST")), Arrays.asList(credential));
-        db = mongoClient.getDatabase(System.getenv("MONGO_DATABASE"));
+    DatabaseProvider(ServerAddress serverAddress,MongoCredential credential, String database) {
+        mongoClient = new MongoClient(serverAddress, Arrays.asList(credential));
+        db = mongoClient.getDatabase(database);
     }
 
     public UserData getUserData(String username) {
-        return null;
+        Document document = db.getCollection("users").find(new Document("username",username)).first();
+        UserData userData = new GsonBuilder().create().fromJson(document.toJson(),UserData.class);
+        return userData;
     }
 
     public void addUserData(UserData userData) {
+        Document document = Document.parse(new GsonBuilder().create().toJson(userData));
+        db.getCollection("users").insertOne(document);
     }
 
     public List<UserData> getAllUsers() {
