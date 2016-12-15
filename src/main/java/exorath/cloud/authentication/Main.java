@@ -1,11 +1,6 @@
 package exorath.cloud.authentication;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.mongodb.*;
-import com.mongodb.util.JSON;
-
-import java.util.Arrays;
+import com.mongodb.MongoCredential;
 
 /**
  * Created by Connor on 12/14/2016.

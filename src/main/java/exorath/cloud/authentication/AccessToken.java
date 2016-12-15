@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
- 
+
 package exorath.cloud.authentication;
 
 import java.util.Date;
@@ -22,29 +22,29 @@ import java.util.Date;
  * Temporary session id for the browser, stored in cookies.
  * Created by Toon Sevrin on 12/14/2016.
  */
-public class AccessToken{
+public class AccessToken {
 
-  private static final long EXPIRE_LENGTH = 86400 * 7; //1 week
-  private String id;
-  private Date expiry;
-  public String accessip;
+    private static final long EXPIRE_LENGTH = 86400 * 7; //1 week
+    public String accessip;
+    private String id;
+    private Date expiry;
 
-  AccessToken(String id, String accessip){
-    this.id = id;
-    this.accessip = accessip;
-    this.expiry = new Date(System.currentTimeMillis() + EXPIRE_LENGTH);
-  }
+    AccessToken(String id, String accessip) {
+        this.id = id;
+        this.accessip = accessip;
+        this.expiry = new Date(System.currentTimeMillis() + EXPIRE_LENGTH);
+    }
 
-  public String getId(){
-    return id;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public boolean isExpired(){
-    //if expiry date is in the past, return true
-    return false;
-  }
-  
-  public Date getExpiry(){
-    return expiry;
-  }
+    public boolean isExpired() {
+        //if expiry date is in the past, return true
+        return false;
+    }
+
+    public Date getExpiry() {
+        return expiry;
+    }
 }

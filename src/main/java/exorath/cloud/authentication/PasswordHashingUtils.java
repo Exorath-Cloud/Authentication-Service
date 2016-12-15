@@ -18,14 +18,15 @@ package exorath.cloud.authentication;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 /**
  * Created by Connor on 12/14/2016.
  */
 public class PasswordHashingUtils {
+
+    static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    static SecureRandom rnd = new SecureRandom();
 
     public static String generatePasswordHash(String plaintext) {
         return BCrypt.hashpw(plaintext, BCrypt.gensalt(12));
@@ -37,9 +38,6 @@ public class PasswordHashingUtils {
         else
             return false;
     }
-
-    static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    static SecureRandom rnd = new SecureRandom();
 
     public static String randomString(int length) {
         StringBuilder sb = new StringBuilder(length);
