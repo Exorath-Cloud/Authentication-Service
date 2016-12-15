@@ -20,7 +20,7 @@ public class Service {
             String testhash = PasswordHashingUtils.generatePasswordHash("test123");
            if(PasswordHashingUtils.checkHash(pasword, testhash)){
                response.status(200);
-               String id = PasswordHashingUtils.randomString(1024);
+               String id = PasswordHashingUtils.randomString(256);
                String accessip = request.ip();
                AccessToken accessToken = new AccessToken(PasswordHashingUtils.generatePasswordHash(id),accessip);
                //get usersdata and add accesstoekn
@@ -29,7 +29,7 @@ public class Service {
                response.status(403);
                response.body("Your username or password was invalid");
            }
-           return response;
+           return response.body();
         });
     }
 
