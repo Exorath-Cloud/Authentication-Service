@@ -16,6 +16,8 @@
  
 package exorath.cloud.authentication;
 
+import java.util.Date;
+
 /**
  * Created by Toon Sevrin on 12/14/2016.
  */
@@ -24,6 +26,7 @@ public class ResetToken {
   
   public boolean isExpired(){
     //if expiry date is in the past, return true
+    return false;
   }
   
   public Date getExpiry(){
