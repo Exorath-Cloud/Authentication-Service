@@ -23,12 +23,10 @@ public class Service {
             UserData userData1 = new GsonBuilder().create().fromJson(document.toJson(),UserData.class);
 
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(userData == userData1);
-            stringBuilder.append("\n");
             stringBuilder.append(new GsonBuilder().create().toJson(userData));
-            stringBuilder.append("\n");
+            stringBuilder.append("<br>");
             stringBuilder.append(new GsonBuilder().create().toJson(userData1));
-            stringBuilder.append("\n");
+            stringBuilder.append("<br>");
             response.body(stringBuilder.toString());
 
             return response.body();
