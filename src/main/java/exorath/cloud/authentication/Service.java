@@ -40,7 +40,7 @@ public class Service {
         });
 
         //used for testing remove in live build
-        get("/create/:username/:password", (request, response) -> {
+        put("/auth/:username/:password", (request, response) -> {
             String username = request.params(":username");
             String password = request.params(":password");
             UserData userData = new UserData(username,"email@rmail.com",PasswordHashingUtils.generatePasswordHash(password));
@@ -48,7 +48,7 @@ public class Service {
             return new GsonBuilder().create().toJson(userData);
         });
 
-        get("/check/:username/:tokenid", (request, response) -> {
+        post("/check/:username/:tokenid", (request, response) -> {
 
             System.out.println("--------------------------------------------");
             System.out.println("token check request from " + request.ip());
