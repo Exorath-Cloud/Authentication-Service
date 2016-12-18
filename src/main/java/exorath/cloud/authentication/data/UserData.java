@@ -1,4 +1,4 @@
-package exorath.cloud.authentication;
+package exorath.cloud.authentication.data;
 
 import java.util.Map;
 
@@ -18,7 +18,7 @@ public class UserData {
 
     private Map<String, ResetToken> resetTokensById; //The password reset tokens by their id, they expire after a timespan and are single use.
 
-    UserData(String username, String email, String passwordHash) {
+    public UserData(String username, String email, String passwordHash) {
         this.username = username;
         this.email = email;
         this.passwordHash = passwordHash;
@@ -71,4 +71,5 @@ public class UserData {
     public void setUsername(String username) {
         this.username = username;
     }
+
 }

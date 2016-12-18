@@ -8,22 +8,21 @@ import com.mongodb.ServerAddress;
  */
 public class Main {
 
-    static Service service;
-    static DatabaseProvider databaseProvider;
+    public static Service service;
+    public static DatabaseProvider databaseProvider;
 
     public static void main(String[] args) {
-        service = new Service(Integer.parseInt(System.getenv("PORT")));
-        String host = System.getenv("MONGO_HOST");
-        String username = System.getenv("MONGO_USER");
-        String database = System.getenv("MONGO_DATABASE");
-        String password = System.getenv("MONGO_PWD");
-        databaseProvider = new DatabaseProvider(new ServerAddress(host),MongoCredential.createCredential(System.getenv("MONGO_USER"), System.getenv("MONGO_DATABASE"), System.getenv("MONGO_PWD").toCharArray()),System.getenv("MONGO_DATABASE"));
-//        service = new Service(8000);
-//        String host = "zkj2.flynnhub.com:3190";
-//        String username = "0f1c6e560223f5e4011cc82335be57e7";
-//        String database = "7d8683dcfb828c87e85b3398f7d34673";
-//        String password = "f72622a025bccdb98ccea99f7f0f7489";
-//        databaseProvider = new DatabaseProvider(new ServerAddress(host),MongoCredential.createCredential(username, database, password.toCharArray()),database);
+//        service = new Service(Integer.parseInt(System.getenv("PORT")));
+//        String host = System.getenv("MONGO_HOST");
+//        String username = System.getenv("MONGO_USER");
+//        String database = System.getenv("MONGO_DATABASE");
+//        String password = System.getenv("MONGO_PWD");
+        service = new Service(8000);
+        String host = "ddkg.flynnhub.com:3162";
+        String username = "068076029742ef69838b2eb38b55f772";
+        String database = "b4d87ff9bbdfc11609c93ee311a59a2a";
+        String password = "58cbe3cffa4a5561f5e9fde56000b61e";
+        databaseProvider = new DatabaseProvider(new ServerAddress(host),MongoCredential.createCredential(username, database, password.toCharArray()),database);
     }
 
 }

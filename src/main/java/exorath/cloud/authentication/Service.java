@@ -1,7 +1,11 @@
 package exorath.cloud.authentication;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.bson.Document;
+import exorath.cloud.authentication.transactions.AuhResponse;
+import exorath.cloud.authentication.transactions.AuthRequest;
+import exorath.cloud.authentication.transactions.RegisterRequest;
+import exorath.cloud.authentication.transactions.RegisterResponse;
 
 import static spark.Spark.*;
 
@@ -13,63 +17,21 @@ public class Service {
 
     Service(int port) {
         port(port);
-        get("/auth/:username/:password", (request, response) -> {
-
-            System.out.println("--------------------------------------------");
-            System.out.println("auth request from " + request.ip());
-            String username = request.params(":username");
-            String password = request.params(":password");
-            System.out.println("Attempting to auth " + username + " " + password);
-
-            UserData userData = Main.databaseProvider.getUserData(username);
-            if(userData != null && PasswordHashingUtils.checkHash(password,userData.getPasswordHash())){
-                String accessip = request.ip();
-                String id = PasswordHashingUtils.randomString(256);
-                userData.setAccessToken(new AccessToken(PasswordHashingUtils.generatePasswordHash(id),accessip));
-                Main.databaseProvider.updateUser(username,userData);
-                response.body(id);
-                response.status(200);
-            }else{
-                response.body("username or password was invalid");
-                response.status(400);
-            }
-
-            System.out.println(response.body());
-            System.out.println("--------------------------------------------");
-            return response.body();
+        post("/auth/", (request, response) -> {
+            Gson gson = new GsonBuilder().create();
+            AuthRequest authRequest = gson.fromJson(request.body(), AuthRequest.class);
+            authRequest.setIp(request.ip());
+            AuhResponse auhResponse = (AuhResponse) authRequest.process();
+            response.status(auhResponse.getStatus());
+            return auhResponse.getBody();
         });
 
-        //used for testing remove in live build
-        put("/auth/:username/:password", (request, response) -> {
-            String username = request.params(":username");
-            String password = request.params(":password");
-            UserData userData = new UserData(username,"email@rmail.com",PasswordHashingUtils.generatePasswordHash(password));
-            Main.databaseProvider.addUserData(userData);
-            return new GsonBuilder().create().toJson(userData);
-        });
-
-        post("/check/:username/:tokenid", (request, response) -> {
-
-            System.out.println("--------------------------------------------");
-            System.out.println("token check request from " + request.ip());
-
-            String username = request.params(":username");
-            String tokenid = request.params(":tokenid");
-
-            UserData userData = Main.databaseProvider.getUserData(username);
-            System.out.println(new GsonBuilder().create().toJson(userData));
-
-            if(userData != null && userData.getAccessToken() != null && userData.getAccessToken().accessip.equalsIgnoreCase(request.ip()) && PasswordHashingUtils.checkHash(tokenid,userData.getAccessToken().getId())){
-                response.body("valid");
-                response.status(200);
-            }else{
-                response.body("username or token was invalid");
-                response.status(400);
-            }
-
-            System.out.println(response.body());
-            System.out.println("--------------------------------------------");
-            return response.body();
+        post("/auth/register/", (request, response) -> {
+            Gson gson = new GsonBuilder().create();
+            RegisterRequest registerRequest = gson.fromJson(request.body(), RegisterRequest.class);
+            RegisterResponse auhResponse = (RegisterResponse) registerRequest.process();
+            response.status(auhResponse.getStatus());
+            return auhResponse.getBody();
         });
 
         exception(Exception.class, (exception, request, response) -> {
