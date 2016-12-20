@@ -20,16 +20,21 @@ public class Service {
         post("/auth/", (request, response) -> {
             Gson gson = new GsonBuilder().create();
             AuthRequest authRequest = gson.fromJson(request.body(), AuthRequest.class);
-            authRequest.setIp(request.ip());
-            AuhResponse auhResponse = (AuhResponse) authRequest.process();
-            response.status(auhResponse.getStatus());
-            return auhResponse.getBody();
+            if(authRequest != null){
+                authRequest.setIp(request.ip());
+                AuhResponse auhResponse = authRequest.process();
+                response.status(auhResponse.getStatus());
+                return auhResponse.getBody();
+            }else{
+                response.status(400);
+                return "error invalid json";
+            }
         });
 
         post("/auth/register/", (request, response) -> {
             Gson gson = new GsonBuilder().create();
             RegisterRequest registerRequest = gson.fromJson(request.body(), RegisterRequest.class);
-            RegisterResponse auhResponse = (RegisterResponse) registerRequest.process();
+            RegisterResponse auhResponse = registerRequest.process();
             response.status(auhResponse.getStatus());
             return auhResponse.getBody();
         });

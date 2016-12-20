@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by Connor on 12/14/2016.
  */
-public class MongoDBProvider implements DatabaseProvider{
+public class MongoDBProvider implements DatabaseProvider {
 
     MongoClient mongoClient;
     MongoDatabase db;

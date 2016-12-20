@@ -14,7 +14,7 @@ public class RegisterRequest implements Request {
     private String password;
 
     @Override
-    public Response process() {
+    public RegisterResponse process() {
 
         if (Main.databaseProvider.getUserDataByUsername(username) == null) {
             if (Main.databaseProvider.getUserDataByEmail(email) == null) {

@@ -16,7 +16,7 @@ public class AuthRequest implements Request {
     private String ip;
 
     @Override
-    public Response process() {
+    public AuhResponse process() {
         UserData userData = Main.databaseProvider.getUserData(email, username);
         if (userData != null) {
             if (PasswordHashing.checkHash(password, userData.getPasswordHash())) {

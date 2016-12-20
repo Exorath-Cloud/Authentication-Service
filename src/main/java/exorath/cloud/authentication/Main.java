@@ -9,7 +9,7 @@ import com.mongodb.ServerAddress;
 public class Main {
 
     public static Service service;
-    public static MongoDBProvider databaseProvider;
+    public static DatabaseProvider databaseProvider;
 
     public static void main(String[] args) {
 //        service = new Service(Integer.parseInt(System.getenv("PORT")));
@@ -17,7 +17,7 @@ public class Main {
 //        String username = System.getenv("MONGO_USER");
 //        String database = System.getenv("MONGO_DATABASE");
 //        String password = System.getenv("MONGO_PWD");
-        service = new Service(8000);
+        service = new Service(8001);
         String host = "ddkg.flynnhub.com:3162";
         String username = "068076029742ef69838b2eb38b55f772";
         String database = "b4d87ff9bbdfc11609c93ee311a59a2a";
