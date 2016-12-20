@@ -9,7 +9,7 @@ import com.mongodb.ServerAddress;
 public class Main {
 
     public static Service service;
-    public static DatabaseProvider databaseProvider;
+    public static MongoDBProvider databaseProvider;
 
     public static void main(String[] args) {
 //        service = new Service(Integer.parseInt(System.getenv("PORT")));
@@ -22,7 +22,7 @@ public class Main {
         String username = "068076029742ef69838b2eb38b55f772";
         String database = "b4d87ff9bbdfc11609c93ee311a59a2a";
         String password = "58cbe3cffa4a5561f5e9fde56000b61e";
-        databaseProvider = new DatabaseProvider(new ServerAddress(host), MongoCredential.createCredential(username, database, password.toCharArray()), database);
+        databaseProvider = new MongoDBProvider(new ServerAddress(host), MongoCredential.createCredential(username, database, password.toCharArray()), database);
     }
 
 }
