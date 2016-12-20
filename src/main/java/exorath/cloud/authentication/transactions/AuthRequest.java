@@ -8,7 +8,7 @@ import exorath.cloud.authentication.utils.PasswordHashing;
 /**
  * Created by Connor on 12/17/2016.
  */
-public class AuthRequest implements Request{
+public class AuthRequest implements Request {
 
     private String username;
     private String email;
@@ -17,17 +17,17 @@ public class AuthRequest implements Request{
 
     @Override
     public Response process() {
-        UserData userData = Main.databaseProvider.getUserData(email,username);
-        if(userData != null){
-            if(PasswordHashing.checkHash(password,userData.getPasswordHash())){
+        UserData userData = Main.databaseProvider.getUserData(email, username);
+        if (userData != null) {
+            if (PasswordHashing.checkHash(password, userData.getPasswordHash())) {
                 String tokenid = PasswordHashing.randomString(AccessToken.ID_LENGTH);
-                AccessToken accessToken = new AccessToken(tokenid,ip);
+                AccessToken accessToken = new AccessToken(tokenid, ip);
                 userData.setAccessToken(accessToken);
-                Main.databaseProvider.updateUserByUsername(username,userData);
-                return new AuhResponse(tokenid,accessToken.getExpiry(),200,"Success");
+                Main.databaseProvider.updateUserByUsername(username, userData);
+                return new AuhResponse(tokenid, accessToken.getExpiry(), 200, "Success");
             }
         }
-        return new AuhResponse(null,null,400,"Invalid username or password");
+        return new AuhResponse(null, null, 400, "Invalid username or password");
     }
 
     public void setIp(String ip) {

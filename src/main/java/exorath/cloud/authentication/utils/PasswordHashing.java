@@ -25,6 +25,9 @@ import java.security.SecureRandom;
  */
 public class PasswordHashing {
 
+    public static final String SPECIAL_CHARACTERS = "!@#$%^&*()~`-=_+[]{}|:\";',./<>?";
+    public static final int MIN_PASSWORD_LENGTH = 8;
+    public static final int MAX_PASSWORD_LENGTH = 20;
     static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     static SecureRandom rnd = new SecureRandom();
 
@@ -46,17 +49,13 @@ public class PasswordHashing {
         return sb.toString();
     }
 
-    public static final String SPECIAL_CHARACTERS = "!@#$%^&*()~`-=_+[]{}|:\";',./<>?";
-    public static final int MIN_PASSWORD_LENGTH = 8;
-    public static final int MAX_PASSWORD_LENGTH = 20;
-
     public static boolean isAcceptablePassword(String password) {
         if (password.isEmpty()) {
             return false;
         }
         password = password.trim();
         int len = password.length();
-        if(len < MIN_PASSWORD_LENGTH || len > MAX_PASSWORD_LENGTH) {
+        if (len < MIN_PASSWORD_LENGTH || len > MAX_PASSWORD_LENGTH) {
             return false;
         }
         char[] aC = password.toCharArray();
@@ -65,17 +64,14 @@ public class PasswordHashing {
         boolean digit = false;
         boolean specChar = false;
         boolean validChars = true;
-        for(char c : aC) {
+        for (char c : aC) {
             if (Character.isUpperCase(c)) {
                 upperCase = true;
-            } else
-            if (Character.isLowerCase(c)) {
+            } else if (Character.isLowerCase(c)) {
                 lowerCase = true;
-            } else
-            if (Character.isDigit(c)) {
+            } else if (Character.isDigit(c)) {
                 digit = true;
-            } else
-            if (SPECIAL_CHARACTERS.indexOf(String.valueOf(c)) >= 0) {
+            } else if (SPECIAL_CHARACTERS.indexOf(String.valueOf(c)) >= 0) {
                 specChar = true;
             } else {
                 validChars = false;
@@ -90,7 +86,7 @@ public class PasswordHashing {
         }
         password = password.trim();
         int len = password.length();
-        if(len < MIN_PASSWORD_LENGTH || len > MAX_PASSWORD_LENGTH) {
+        if (len < MIN_PASSWORD_LENGTH || len > MAX_PASSWORD_LENGTH) {
             return "Password must be 8-20 characters in length";
         }
         char[] aC = password.toCharArray();
@@ -99,32 +95,29 @@ public class PasswordHashing {
         boolean digit = false;
         boolean specChar = false;
         boolean validChars = true;
-        for(char c : aC) {
+        for (char c : aC) {
             if (Character.isUpperCase(c)) {
                 upperCase = true;
-            } else
-            if (Character.isLowerCase(c)) {
+            } else if (Character.isLowerCase(c)) {
                 lowerCase = true;
-            } else
-            if (Character.isDigit(c)) {
+            } else if (Character.isDigit(c)) {
                 digit = true;
-            } else
-            if (SPECIAL_CHARACTERS.indexOf(String.valueOf(c)) >= 0) {
+            } else if (SPECIAL_CHARACTERS.indexOf(String.valueOf(c)) >= 0) {
                 specChar = true;
             } else {
                 validChars = false;
             }
         }
 
-        if(!upperCase){
+        if (!upperCase) {
             return "Password must contain a upper case character";
-        }else if(!lowerCase){
+        } else if (!lowerCase) {
             return "Password must contain a lower case character";
-        }else if(!digit){
+        } else if (!digit) {
             return "Password must contain a digit";
-        }else if(!specChar){
+        } else if (!specChar) {
             return "Password must contain a special character !@#$%^&*()~`-=_+[]{}|:\";',./<>?";
-        }else if (!validChars){
+        } else if (!validChars) {
             return "Password must only contain characters, digits and  special characters";
         }
 

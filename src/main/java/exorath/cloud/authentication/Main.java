@@ -22,7 +22,7 @@ public class Main {
         String username = "068076029742ef69838b2eb38b55f772";
         String database = "b4d87ff9bbdfc11609c93ee311a59a2a";
         String password = "58cbe3cffa4a5561f5e9fde56000b61e";
-        databaseProvider = new DatabaseProvider(new ServerAddress(host),MongoCredential.createCredential(username, database, password.toCharArray()),database);
+        databaseProvider = new DatabaseProvider(new ServerAddress(host), MongoCredential.createCredential(username, database, password.toCharArray()), database);
     }
 
 }

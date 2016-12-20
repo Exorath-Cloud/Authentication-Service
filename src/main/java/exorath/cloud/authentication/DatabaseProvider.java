@@ -21,52 +21,52 @@ public class DatabaseProvider {
     MongoClient mongoClient;
     MongoDatabase db;
 
-    DatabaseProvider(ServerAddress serverAddress,MongoCredential credential, String database) {
+    DatabaseProvider(ServerAddress serverAddress, MongoCredential credential, String database) {
         mongoClient = new MongoClient(serverAddress, Arrays.asList(credential));
         db = mongoClient.getDatabase(database);
     }
 
     public UserData getUserDataByUsername(String username) {
-        Document document = db.getCollection("users").find(new Document("username",username)).first();
-        if (document != null){
-            UserData userData = new GsonBuilder().create().fromJson(document.toJson(),UserData.class);
+        Document document = db.getCollection("users").find(new Document("username", username)).first();
+        if (document != null) {
+            UserData userData = new GsonBuilder().create().fromJson(document.toJson(), UserData.class);
             return userData;
         }
         return null;
     }
 
     public UserData getUserDataByEmail(String email) {
-        Document document = db.getCollection("users").find(new Document("email",email)).first();
-        if (document != null){
-            UserData userData = new GsonBuilder().create().fromJson(document.toJson(),UserData.class);
+        Document document = db.getCollection("users").find(new Document("email", email)).first();
+        if (document != null) {
+            UserData userData = new GsonBuilder().create().fromJson(document.toJson(), UserData.class);
             return userData;
         }
         return null;
     }
 
-    public UserData getUserData(String email, String username){
+    public UserData getUserData(String email, String username) {
         UserData userData = getUserDataByUsername(username);
-        if(userData == null){
+        if (userData == null) {
             userData = getUserDataByEmail(email);
         }
         return userData;
     }
 
     public void addUserData(UserData userData) {
-        if(getUserData(userData.getEmail(), userData.getUsername()) != null){
-            updateUserByUsername(userData.getUsername(),userData);
-        }else{
+        if (getUserData(userData.getEmail(), userData.getUsername()) != null) {
+            updateUserByUsername(userData.getUsername(), userData);
+        } else {
             Document document = Document.parse(new GsonBuilder().create().toJson(userData));
             db.getCollection("users").insertOne(document);
         }
     }
 
-    public List<UserData> getAllUsers(){
+    public List<UserData> getAllUsers() {
         ArrayList<UserData> userDatas = new ArrayList<>();
         MongoCursor<Document> cursor = db.getCollection("users").find().iterator();
         try {
             while (cursor.hasNext()) {
-               userDatas.add(new GsonBuilder().create().fromJson(cursor.next().toJson(),UserData.class));
+                userDatas.add(new GsonBuilder().create().fromJson(cursor.next().toJson(), UserData.class));
             }
         } finally {
             cursor.close();
@@ -75,10 +75,10 @@ public class DatabaseProvider {
     }
 
     public void updateUserByUsername(String username, UserData userData) {
-        db.getCollection("users").findOneAndReplace(new Document("username",username),Document.parse(new GsonBuilder().create().toJson(userData)));
+        db.getCollection("users").findOneAndReplace(new Document("username", username), Document.parse(new GsonBuilder().create().toJson(userData)));
     }
 
     public void updateUserByEmail(String email, UserData userData) {
-        db.getCollection("users").findOneAndReplace(new Document("email",email),Document.parse(new GsonBuilder().create().toJson(userData)));
+        db.getCollection("users").findOneAndReplace(new Document("email", email), Document.parse(new GsonBuilder().create().toJson(userData)));
     }
 }

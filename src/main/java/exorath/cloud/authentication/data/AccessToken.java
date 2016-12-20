@@ -27,8 +27,8 @@ import java.util.Objects;
  */
 public class AccessToken {
 
-    private static final long EXPIRE_LENGTH = 86400 * 7; //1 week
     public static final int ID_LENGTH = 128;
+    private static final long EXPIRE_LENGTH = 86400 * 7; //1 week
     public String accessip;
     private String id;
     private Date expiry;
