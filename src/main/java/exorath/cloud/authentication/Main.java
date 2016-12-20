@@ -2,6 +2,7 @@ package exorath.cloud.authentication;
 
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
+import exorath.cloud.authentication.data.DatabaseProvider;
 
 /**
  * Created by Connor on 12/14/2016.

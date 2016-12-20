@@ -1,4 +1,4 @@
-package exorath.cloud.authentication;
+package exorath.cloud.authentication.data;
 
 import exorath.cloud.authentication.data.UserData;
 

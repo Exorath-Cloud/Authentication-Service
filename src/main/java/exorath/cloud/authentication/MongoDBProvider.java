@@ -6,6 +6,7 @@ import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import exorath.cloud.authentication.data.DatabaseProvider;
 import exorath.cloud.authentication.data.UserData;
 import org.bson.Document;
 
