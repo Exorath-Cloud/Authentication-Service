@@ -20,12 +20,12 @@ public class Service {
         post("/auth/", (request, response) -> {
             Gson gson = new GsonBuilder().create();
             AuthRequest authRequest = gson.fromJson(request.body(), AuthRequest.class);
-            if(authRequest != null){
+            if (authRequest != null) {
                 authRequest.setIp(request.ip());
                 AuhResponse auhResponse = authRequest.process();
                 response.status(auhResponse.getStatus());
                 return auhResponse.getBody();
-            }else{
+            } else {
                 response.status(400);
                 return "error invalid json";
             }

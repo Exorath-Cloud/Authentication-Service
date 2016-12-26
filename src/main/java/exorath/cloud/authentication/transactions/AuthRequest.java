@@ -10,6 +10,7 @@ import exorath.cloud.authentication.utils.PasswordHashing;
  */
 public class AuthRequest implements Request {
 
+    private String userid;
     private String username;
     private String email;
     private String password;
@@ -17,13 +18,13 @@ public class AuthRequest implements Request {
 
     @Override
     public AuhResponse process() {
-        UserData userData = Main.databaseProvider.getUserData(email, username);
+        UserData userData = Main.databaseProvider.getUserData(userid,email, username);
         if (userData != null) {
             if (PasswordHashing.checkHash(password, userData.getPasswordHash())) {
                 String tokenid = PasswordHashing.randomString(AccessToken.ID_LENGTH);
                 AccessToken accessToken = new AccessToken(tokenid, ip);
                 userData.setAccessToken(accessToken);
-                Main.databaseProvider.updateUserByUsername(username, userData);
+                Main.databaseProvider.saveUserData(userData);
                 return new AuhResponse(tokenid, accessToken.getExpiry(), 200, "Success");
             }
         }

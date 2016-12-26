@@ -1,7 +1,5 @@
 package exorath.cloud.authentication.data;
 
-import exorath.cloud.authentication.data.UserData;
-
 import java.util.List;
 
 /**
@@ -9,18 +7,16 @@ import java.util.List;
  */
 public interface DatabaseProvider {
 
-    public UserData getUserDataByUsername(String username);
+    UserData getUserDataByUsername(String username);
 
-    public UserData getUserDataByEmail(String email);
+    UserData getUserDataByEmail(String email);
 
-    public UserData getUserData(String email, String username);
+    UserData getUserData(String userid, String email, String username);
 
-    public void addUserData(UserData userData);
+    void saveUserData(UserData userData);
 
-    public List<UserData> getAllUsers();
+    List<UserData> getAllUsers();
 
-    public void updateUserByUsername(String username, UserData userData);
-
-    public void updateUserByEmail(String email, UserData userData);
+    UserData getUserDataByUserid(String userid);
 
 }

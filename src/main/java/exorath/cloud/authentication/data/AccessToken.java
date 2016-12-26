@@ -17,6 +17,7 @@
 package exorath.cloud.authentication.data;
 
 import exorath.cloud.authentication.utils.PasswordHashing;
+import org.mongodb.morphia.annotations.NotSaved;
 
 import java.util.Date;
 import java.util.Objects;
@@ -29,8 +30,11 @@ public class AccessToken {
 
     public static final int ID_LENGTH = 128;
     private static final long EXPIRE_LENGTH = 86400 * 7; //1 week
+    @NotSaved
     public String accessip;
+    @NotSaved
     private String id;
+    @NotSaved
     private Date expiry;
 
     public AccessToken(String id, String accessip) {
