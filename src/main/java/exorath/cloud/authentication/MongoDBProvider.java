@@ -1,6 +1,7 @@
 package exorath.cloud.authentication;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
@@ -10,10 +11,7 @@ import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Connor on 12/14/2016.
@@ -25,9 +23,12 @@ public class MongoDBProvider implements DatabaseProvider {
     MongoClient mongoClient;
 
     MongoDBProvider(ServerAddress serverAddress, MongoCredential credential, String database) {
-        mongoClient = new MongoClient(serverAddress, Arrays.asList(credential));
+        MongoClientOptions.Builder builder = new MongoClientOptions.Builder();
+        builder.maxConnectionIdleTime(60000);
+        MongoClientOptions opts = builder.build();
+        mongoClient = new MongoClient(serverAddress, Arrays.asList(credential),opts);
         morphia.mapPackage("exorath.cloud.authentication");
-        datastore = morphia.createDatastore(new MongoClient(), database);
+        datastore = morphia.createDatastore(mongoClient, database);
         datastore.ensureIndexes();
     }
 
@@ -62,12 +63,8 @@ public class MongoDBProvider implements DatabaseProvider {
     }
 
     public List<UserData> getAllUsers() {
-        ArrayList<UserData> userDatas = new ArrayList<>();
         Query<UserData> query = datastore.createQuery(UserData.class);
-        for (UserData aQuery : query) {
-            userDatas.add(aQuery);
-        }
-        return userDatas;
+        return query.asList();
     }
 
 }

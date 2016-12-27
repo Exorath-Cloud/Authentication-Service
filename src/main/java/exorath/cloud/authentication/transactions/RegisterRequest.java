@@ -1,5 +1,6 @@
 package exorath.cloud.authentication.transactions;
 
+import com.google.gson.GsonBuilder;
 import exorath.cloud.authentication.Main;
 import exorath.cloud.authentication.data.UserData;
 import exorath.cloud.authentication.utils.PasswordHashing;
@@ -17,13 +18,17 @@ public class RegisterRequest implements Request {
 
     @Override
     public RegisterResponse process() {
-
+        if(username == null || email == null || password == null){
+            return new RegisterResponse(400, "Parsing Error");
+        }
         if (Main.databaseProvider.getUserDataByUsername(username) == null) {
             if (Main.databaseProvider.getUserDataByEmail(email) == null) {
                 //password validation
                 if (PasswordHashing.isAcceptablePassword(password)) {
                     UserData userData = new UserData(UUID.randomUUID().toString(), username, email, PasswordHashing.generatePasswordHash(password));
                     Main.databaseProvider.saveUserData(userData);
+                    //debug
+                    System.out.println(userData.toString());
                     return new RegisterResponse(200, "Registration complete");
                 } else {
                     return new RegisterResponse(400, PasswordHashing.getInvalidReasion(password));
@@ -36,4 +41,5 @@ public class RegisterRequest implements Request {
         }
 
     }
+
 }

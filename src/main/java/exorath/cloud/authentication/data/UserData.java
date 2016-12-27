@@ -1,5 +1,6 @@
 package exorath.cloud.authentication.data;
 
+import com.google.gson.GsonBuilder;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
@@ -15,9 +16,7 @@ public class UserData {
 
     @Id
     private String userid;
-    @Id
     private String username; //the unique identifier of the user
-    @Id
     private String email; //email address of the user (will also be unique)
     private String passwordHash; //the bcrypt hashed password with salt
 
@@ -30,11 +29,14 @@ public class UserData {
     @Embedded
     private Map<String, ResetToken> resetTokensById; //The password reset tokens by their id, they expire after a timespan and are single use.
 
-    public UserData(String _id, String username, String email, String passwordHash) {
+    public UserData(String userid, String username, String email, String passwordHash) {
+        this.userid = userid;
         this.username = username;
         this.email = email;
         this.passwordHash = passwordHash;
     }
+
+    public UserData(){}
 
     public AccessToken getAccessToken() {
         return accessToken;
@@ -82,6 +84,11 @@ public class UserData {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return new GsonBuilder().setPrettyPrinting().create().toJson(this);
     }
 
 }

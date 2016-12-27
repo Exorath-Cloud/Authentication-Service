@@ -1,20 +1,22 @@
 package exorath.cloud.authentication.transactions;
 
 import com.google.gson.GsonBuilder;
-import exorath.cloud.authentication.data.UserData;
+
+import java.util.Date;
 
 /**
- * Created by Connor on 12/18/2016.
+ * Created by Connor on 12/26/2016.
  */
-public class RegisterResponse implements Response {
+public class AccessTokenCheckResponse implements Response {
 
     int status;
     String errorMessage;
 
-    RegisterResponse(int status, String errorMessage) {
+    AccessTokenCheckResponse(int status, String errorMessage) {
         this.status = status;
         this.errorMessage = errorMessage;
     }
+
 
     @Override
     public String getBody() {
@@ -25,5 +27,4 @@ public class RegisterResponse implements Response {
     public int getStatus() {
         return status;
     }
-
 }

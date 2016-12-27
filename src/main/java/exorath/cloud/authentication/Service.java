@@ -2,10 +2,7 @@ package exorath.cloud.authentication;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import exorath.cloud.authentication.transactions.AuhResponse;
-import exorath.cloud.authentication.transactions.AuthRequest;
-import exorath.cloud.authentication.transactions.RegisterRequest;
-import exorath.cloud.authentication.transactions.RegisterResponse;
+import exorath.cloud.authentication.transactions.*;
 
 import static spark.Spark.*;
 
@@ -21,7 +18,7 @@ public class Service {
             Gson gson = new GsonBuilder().create();
             AuthRequest authRequest = gson.fromJson(request.body(), AuthRequest.class);
             if (authRequest != null) {
-                authRequest.setIp(request.ip());
+                authRequest.setIP(request.ip());
                 AuhResponse auhResponse = authRequest.process();
                 response.status(auhResponse.getStatus());
                 return auhResponse.getBody();
@@ -37,6 +34,15 @@ public class Service {
             RegisterResponse auhResponse = registerRequest.process();
             response.status(auhResponse.getStatus());
             return auhResponse.getBody();
+        });
+
+        put("/auth/",  (request, response) -> {
+            Gson gson = new GsonBuilder().create();
+            AccessTokenCheckRequest accessTokenCheckRequest = gson.fromJson(request.body(), AccessTokenCheckRequest.class);
+            accessTokenCheckRequest.setIP(request.ip());
+            AccessTokenCheckResponse accessTokenCheckResponse = accessTokenCheckRequest.process();
+            response.status(accessTokenCheckResponse.getStatus());
+            return accessTokenCheckResponse.getBody();
         });
 
         exception(Exception.class, (exception, request, response) -> {

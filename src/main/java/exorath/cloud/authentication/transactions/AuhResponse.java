@@ -9,13 +9,13 @@ import java.util.Date;
  */
 public class AuhResponse implements Response {
 
-    String tokenid;
+    String accesstoken;
     Date expiry;
     int status;
     String errorMessage;
 
-    AuhResponse(String tokenid, Date expiry, int status, String errorMessage) {
-        this.tokenid = tokenid;
+    AuhResponse(String accesstoken, Date expiry, int status, String errorMessage) {
+        this.accesstoken = accesstoken;
         this.expiry = expiry;
         this.status = status;
         this.errorMessage = errorMessage;
