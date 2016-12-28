@@ -2,7 +2,7 @@
 The Authentication-Service serves and validates user authetication.
 
 ##Endpoints
-###/accounts/ [POST]
+###/auth/ [POST]
 ###Authenticates users by userid, username or email, at least one needs to be valid. This returns a valid access token.
 
 **Reuqest Body**:
@@ -36,3 +36,23 @@ The Authentication-Service serves and validates user authetication.
 ```
 - accesstoken (String): the non-hashed accesstoken id
 - expiry (Date): the date the access token expires
+
+###/auth/register [POST]
+###Creates a new userdata entry with a username, password and email
+
+**Reuqest Body**:
+```json
+{  
+   "username":"value",
+   "email":"value",
+   "password":"value"
+}
+```
+
+**Response Body**:
+```json
+{  
+   "status":400,
+   "errorMessage":"value"
+}
+```
