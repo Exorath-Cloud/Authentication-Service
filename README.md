@@ -68,7 +68,7 @@ if access token is valid:
 **Response Body**:
 ```json
 {  
-   "userid": "value"
+   "userid": "value",
    "status": 0,
    "errorMessage":"value"
 }
@@ -80,6 +80,5 @@ if access token is invalid:
    "status": 0,
    "errorMessage":"value"
 }
-
 - userid (UUID): the userid assocaited with the access token
 - status (int): will be 200 or 400
