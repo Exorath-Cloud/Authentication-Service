@@ -18,13 +18,13 @@ public class AccessTokenCheckRequest implements Request {
   @Override
   public AccessTokenCheckResponse process() {
     if (accesstoken == null) {
-      return new AccessTokenCheckResponse(400, "Error Parsing");
+      return new AccessTokenCheckResponse(null, 400, "Error Parsing");
     }
     UserData userData = Main.databaseProvider.getUserDataByAccessToken(accesstoken, false);
     if (userData != null) {
-      return new AccessTokenCheckResponse(200, "Success");
+      return new AccessTokenCheckResponse(userData.getUserid(), 200, "Success");
     } else {
-      return new AccessTokenCheckResponse(400, "Authentication failed");
+      return new AccessTokenCheckResponse(null, 400, "Authentication failed");
     }
 
   }

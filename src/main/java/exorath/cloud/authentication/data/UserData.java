@@ -91,4 +91,11 @@ public class UserData {
     return new GsonBuilder().setPrettyPrinting().create().toJson(this);
   }
 
+  public String getUserid() {
+    return userid;
+  }
+
+  public void setUserid(String userid) {
+    this.userid = userid;
+  }
 }

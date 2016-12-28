@@ -22,7 +22,7 @@ public class Service {
 
   Service(int port) {
     port(port);
-    post("/auth/", (request, response) -> {
+    post("/auth", (request, response) -> {
       Gson gson = new GsonBuilder().create();
       AuthRequest authRequest = gson.fromJson(request.body(), AuthRequest.class);
       if (authRequest != null) {
@@ -36,7 +36,7 @@ public class Service {
       }
     });
 
-    post("/auth/register/", (request, response) -> {
+    post("/auth/register", (request, response) -> {
       Gson gson = new GsonBuilder().create();
       RegisterRequest registerRequest = gson.fromJson(request.body(), RegisterRequest.class);
       RegisterResponse auhResponse = registerRequest.process();

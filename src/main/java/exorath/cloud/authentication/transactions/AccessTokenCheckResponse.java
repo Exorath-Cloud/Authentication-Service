@@ -7,10 +7,12 @@ import com.google.gson.GsonBuilder;
  */
 public class AccessTokenCheckResponse implements Response {
 
+  String userid;
   int status;
   String errorMessage;
 
-  AccessTokenCheckResponse(int status, String errorMessage) {
+  AccessTokenCheckResponse(String userid, int status, String errorMessage) {
+    this.userid = userid;
     this.status = status;
     this.errorMessage = errorMessage;
   }
