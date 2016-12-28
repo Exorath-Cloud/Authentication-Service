@@ -57,3 +57,18 @@ The Authentication-Service serves and validates user authetication.
 }
 ```
 - status (int): will be 200 or 400
+
+###/auth/{accesstoken} [GET]
+###checks an accesstoken
+
+**argument**
+- accesstoken (string): non-hashed access token
+
+**Response Body**:
+```json
+{  
+   "status": 0,
+   "errorMessage":"value"
+}
+```
+- status (int): will be 200 or 400
