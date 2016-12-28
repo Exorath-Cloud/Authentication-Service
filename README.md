@@ -52,7 +52,7 @@ The Authentication-Service serves and validates user authetication.
 **Response Body**:
 ```json
 {  
-   "status":400,
+   "status": 200 or 400,
    "errorMessage":"value"
 }
 ```
