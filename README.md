@@ -18,6 +18,7 @@ The Authentication-Service serves and validates user authetication.
 **Response Body**:
  
  If the authentication fails:
+ 
 ```json
 {  
    "status":400,
@@ -26,6 +27,7 @@ The Authentication-Service serves and validates user authetication.
 ```
  
  If the authentication passes:
+ 
 ```json
 {  
    "accesstoken":"value",
@@ -34,6 +36,7 @@ The Authentication-Service serves and validates user authetication.
    "errorMessage":"success"
 }
 ```
+
 - accesstoken (String): the non-hashed accesstoken id
 - expiry (Date): the date the access token expires
 
@@ -56,6 +59,7 @@ The Authentication-Service serves and validates user authetication.
    "errorMessage":"value"
 }
 ```
+
 - status (int): will be 200 or 400
 
 ###/auth/{accesstoken} [GET]
@@ -65,6 +69,7 @@ The Authentication-Service serves and validates user authetication.
 - accesstoken (string): non-hashed access token
 
 if access token is valid:
+
 **Response Body**:
 ```json
 {  
@@ -73,12 +78,15 @@ if access token is valid:
    "errorMessage":"value"
 }
 ```
+
 if access token is invalid:
+
 **Response Body**:
 ```json
 {  
    "status": 0,
    "errorMessage":"value"
 }
+
 - userid (UUID): the userid assocaited with the access token
 - status (int): will be 200 or 400
