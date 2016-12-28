@@ -7,18 +7,18 @@ import java.util.List;
  */
 public interface DatabaseProvider {
 
-    UserData getUserDataByAccessToken(String accesstoken, boolean hashed);
+  UserData getUserDataByAccessToken(String accesstoken, boolean hashed);
 
-    UserData getUserDataByUsername(String username);
+  UserData getUserDataByUsername(String username);
 
-    UserData getUserDataByEmail(String email);
+  UserData getUserDataByEmail(String email);
 
-    UserData getUserData(String userid, String email, String username);
+  UserData getUserData(String userid, String email, String username);
 
-    void saveUserData(UserData userData);
+  void saveUserData(UserData userData);
 
-    List<UserData> getAllUsers();
+  List<UserData> getAllUsers();
 
-    UserData getUserDataByUserid(String userid);
+  UserData getUserDataByUserid(String userid);
 
 }

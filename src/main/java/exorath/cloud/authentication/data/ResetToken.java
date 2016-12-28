@@ -22,14 +22,15 @@ import java.util.Date;
  * Created by Toon Sevrin on 12/14/2016.
  */
 public class ResetToken {
-    private Date expiry;
 
-    public boolean isExpired() {
-        //if expiry date is in the past, return true
-        return false;
-    }
+  private Date expiry;
 
-    public Date getExpiry() {
-        return expiry;
-    }
+  public boolean isExpired() {
+    //if expiry date is in the past, return true
+    return false;
+  }
+
+  public Date getExpiry() {
+    return expiry;
+  }
 }

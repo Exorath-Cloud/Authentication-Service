@@ -16,8 +16,6 @@
 
 package exorath.cloud.authentication.data;
 
-import exorath.cloud.authentication.utils.Hashing;
-
 import java.util.Date;
 import java.util.Objects;
 
@@ -27,41 +25,42 @@ import java.util.Objects;
  */
 public class AccessToken {
 
-    public static final int ID_LENGTH = 128;
-    private static final long EXPIRE_LENGTH = 86400 * 7; //1 week
-    private String accessip;
-    private String id;
-    private Date expiry;
+  public static final int ID_LENGTH = 128;
+  private static final long EXPIRE_LENGTH = 86400 * 7; //1 week
+  private String accessip;
+  private String id;
+  private Date expiry;
 
-    public AccessToken(){}
+  public AccessToken() {
+  }
 
-    public AccessToken(String id, String accessip) {
-        this.id = id;
-        this.accessip = accessip;
-        this.expiry = new Date(System.currentTimeMillis() + EXPIRE_LENGTH);
-    }
+  public AccessToken(String id, String accessip) {
+    this.id = id;
+    this.accessip = accessip;
+    this.expiry = new Date(System.currentTimeMillis() + EXPIRE_LENGTH);
+  }
 
-    public void setIP(String accessip) {
-         this.accessip = accessip;
-    }
+  public String getIP() {
+    return accessip;
+  }
 
-    public String getIP() {
-        return accessip;
-    }
+  public void setIP(String accessip) {
+    this.accessip = accessip;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public boolean isExpired() {
-        return getExpiry().getTime() <= System.currentTimeMillis();
-    }
+  public boolean isExpired() {
+    return getExpiry().getTime() <= System.currentTimeMillis();
+  }
 
-    public boolean isAllowed(String accessip) {
-        return Objects.equals(this.accessip, accessip);
-    }
+  public boolean isAllowed(String accessip) {
+    return Objects.equals(this.accessip, accessip);
+  }
 
-    public Date getExpiry() {
-        return expiry;
-    }
+  public Date getExpiry() {
+    return expiry;
+  }
 }
