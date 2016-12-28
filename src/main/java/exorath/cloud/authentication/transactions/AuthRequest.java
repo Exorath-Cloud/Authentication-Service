@@ -4,7 +4,7 @@ import com.google.gson.GsonBuilder;
 import exorath.cloud.authentication.Main;
 import exorath.cloud.authentication.data.AccessToken;
 import exorath.cloud.authentication.data.UserData;
-import exorath.cloud.authentication.utils.PasswordHashing;
+import exorath.cloud.authentication.utils.Hashing;
 
 /**
  * Created by Connor on 12/17/2016.
@@ -21,13 +21,13 @@ public class AuthRequest implements Request {
     public AuhResponse process() {
         UserData userData = Main.databaseProvider.getUserData(userid,email,username);
         if (userData != null) {
-            if (PasswordHashing.checkHash(password, userData.getPasswordHash())) {
-                String tokenid = PasswordHashing.randomString(AccessToken.ID_LENGTH);
-                AccessToken accessToken = new AccessToken(tokenid, ip);
+            if (Hashing.checkHash(password, userData.getPasswordHash())) {
+                String accessTokenId = Hashing.randomString(AccessToken.ID_LENGTH);
+                String hashedAccessTokenId = Hashing.sha512(accessTokenId);
+                AccessToken accessToken = new AccessToken(hashedAccessTokenId, ip);
                 userData.setAccessToken(accessToken);
                 Main.databaseProvider.saveUserData(userData);
-                System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(Main.databaseProvider.getAllUsers()));
-                return new AuhResponse(tokenid, accessToken.getExpiry(), 200, "Success");
+                return new AuhResponse(accessTokenId, accessToken.getExpiry(), 200, "Success");
             }else{
                 return new AuhResponse(null, null, 400, "Invalid password");
             }

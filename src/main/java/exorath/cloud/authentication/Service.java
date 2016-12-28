@@ -36,9 +36,8 @@ public class Service {
             return auhResponse.getBody();
         });
 
-        put("/auth/",  (request, response) -> {
-            Gson gson = new GsonBuilder().create();
-            AccessTokenCheckRequest accessTokenCheckRequest = gson.fromJson(request.body(), AccessTokenCheckRequest.class);
+        get("/auth/:accesstoken",  (request, response) -> {
+            AccessTokenCheckRequest accessTokenCheckRequest = new AccessTokenCheckRequest(request.params(":accesstoken"));
             accessTokenCheckRequest.setIP(request.ip());
             AccessTokenCheckResponse accessTokenCheckResponse = accessTokenCheckRequest.process();
             response.status(accessTokenCheckResponse.getStatus());

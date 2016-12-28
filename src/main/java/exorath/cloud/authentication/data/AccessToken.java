@@ -16,8 +16,7 @@
 
 package exorath.cloud.authentication.data;
 
-import exorath.cloud.authentication.utils.PasswordHashing;
-import org.mongodb.morphia.annotations.NotSaved;
+import exorath.cloud.authentication.utils.Hashing;
 
 import java.util.Date;
 import java.util.Objects;
@@ -37,7 +36,7 @@ public class AccessToken {
     public AccessToken(){}
 
     public AccessToken(String id, String accessip) {
-        this.id = PasswordHashing.generatePasswordHash(id);
+        this.id = id;
         this.accessip = accessip;
         this.expiry = new Date(System.currentTimeMillis() + EXPIRE_LENGTH);
     }

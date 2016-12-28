@@ -7,6 +7,8 @@ import java.util.List;
  */
 public interface DatabaseProvider {
 
+    UserData getUserDataByAccessToken(String accesstoken, boolean hashed);
+
     UserData getUserDataByUsername(String username);
 
     UserData getUserDataByEmail(String email);

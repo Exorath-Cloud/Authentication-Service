@@ -7,6 +7,7 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
 import exorath.cloud.authentication.data.DatabaseProvider;
 import exorath.cloud.authentication.data.UserData;
+import exorath.cloud.authentication.utils.Hashing;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
@@ -30,10 +31,21 @@ public class MongoDBProvider implements DatabaseProvider {
         morphia.mapPackage("exorath.cloud.authentication");
         datastore = morphia.createDatastore(mongoClient, database);
         datastore.ensureIndexes();
+        datastore.delete(datastore.createQuery(UserData.class));
     }
 
     public UserData getUserDataByUserid(String userid) {
         Query<UserData> query = datastore.createQuery(UserData.class).filter("userid", userid);
+        return query.get();
+    }
+
+    @Override
+    public UserData getUserDataByAccessToken(String accesstoken, boolean hashed) {
+        if(!hashed){
+            accesstoken = Hashing.sha512(accesstoken);
+        }
+        System.out.println(accesstoken);
+        Query<UserData> query = datastore.createQuery(UserData.class).filter("accessToken.id", accesstoken);
         return query.get();
     }
 

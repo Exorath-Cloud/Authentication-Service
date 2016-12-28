@@ -18,12 +18,16 @@ package exorath.cloud.authentication.utils;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Connor on 12/14/2016.
  */
-public class PasswordHashing {
+public class Hashing {
 
     public static final String SPECIAL_CHARACTERS = "!@#$%^&*()~`-=_+[]{}|:\";',./<>?";
     public static final int MIN_PASSWORD_LENGTH = 8;
@@ -40,6 +44,22 @@ public class PasswordHashing {
             return true;
         else
             return false;
+    }
+
+    public static String sha512(String s) {
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("SHA-512");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        md.update(s.getBytes());
+        byte byteData[] = md.digest();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < byteData.length; i++) {
+            sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        }
+        return sb.toString();
     }
 
     public static String randomString(int length) {
@@ -123,6 +143,14 @@ public class PasswordHashing {
 
         return "Unknown";
 
+    }
+
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+    public static boolean validateEmail(String emailStr) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailStr);
+        return matcher.find();
     }
 
 }
