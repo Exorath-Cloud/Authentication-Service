@@ -5,7 +5,7 @@ The Authentication-Service serves and validates user authetication.
 ###/accounts/ [POST]
 ###Authenticates users by userid, username or email, at least one needs to be valid. This returns a valid access token.
 
-** Reuqest Body**:
+**Reuqest Body**:
 ```json
 {  
    "userid":"value",
